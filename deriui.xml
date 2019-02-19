@@ -25,7 +25,7 @@
   <property name="windowTitle">
    <string>Deribit Trade Terminal</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
+ <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_4">
     <item>
      <widget class="QFrame" name="placeHolderFrame">
@@ -136,12 +136,6 @@
   </widget>
   <widget class="QDockWidget" name="dockWidget_5">
    <property name="minimumSize">
-    <size>
-     <width>328</width>
-     <height>236</height>
-    </size>
-   </property>
-   <property name="maximumSize">
     <size>
      <width>328</width>
      <height>236</height>
@@ -398,6 +392,149 @@
           <string>Amount</string>
          </property>
          <widget class="QLineEdit" name="limitAmountInput">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>111</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="scalpOrderTab">
+        <attribute name="title">
+         <string>Scalp Order</string>
+        </attribute>
+        <widget class="QPushButton" name="scalpBuyButton">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>130</y>
+           <width>81</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: green</string>
+         </property>
+         <property name="text">
+          <string>Scalp Buy</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="scalpSellButton">
+         <property name="geometry">
+          <rect>
+           <x>210</x>
+           <y>130</y>
+           <width>81</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: red</string>
+         </property>
+         <property name="text">
+          <string>Scalp Sell</string>
+         </property>
+        </widget>
+        <widget class="QGroupBox" name="groupBox_11">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>60</y>
+           <width>131</width>
+           <height>61</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>Stop Loss</string>
+         </property>
+         <widget class="QLineEdit" name="scalpSLInput">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>111</width>
+            <height>20</height>
+           </rect>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QGroupBox" name="groupBox_14">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>60</y>
+           <width>111</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>Take Profit</string>
+         </property>
+         <widget class="QLineEdit" name="scalpTPInput">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>80</width>
+            <height>20</height>
+           </rect>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QGroupBox" name="groupBox_12">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>0</y>
+           <width>281</width>
+           <height>61</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>Account Selection</string>
+         </property>
+         <widget class="QComboBox" name="scalpOrderComboBox">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>261</width>
+            <height>22</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>All</string>
+           </property>
+          </item>
+         </widget>
+        </widget>
+        <widget class="QGroupBox" name="groupBox_13">
+         <property name="geometry">
+          <rect>
+           <x>160</x>
+           <y>60</y>
+           <width>131</width>
+           <height>61</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>Amount</string>
+         </property>
+         <widget class="QLineEdit" name="scalpAmountInput">
           <property name="enabled">
            <bool>true</bool>
           </property>
