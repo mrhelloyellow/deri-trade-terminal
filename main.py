@@ -22,10 +22,8 @@ from deritradeterminal.threads.StopOrdersUpdateThread import StopOrdersUpdateThr
 from deritradeterminal.threads.AccountInfoUpdateThread import AccountInfoUpdateThread
 from deritradeterminal.threads.RecentTradesUpdateThread import RecentTradesUpdateThread
 
-from deritradeterminal.threads.orders.LimitSellThread import LimitSellThread
 from deritradeterminal.threads.orders.LimitBuyThread import LimitBuyThread
-from deritradeterminal.threads.orders.ScalpSellThread import ScalpSellThread
-from deritradeterminal.threads.orders.ScalpBuyThread import ScalpBuyThread
+from deritradeterminal.threads.orders.LimitSellThread import LimitSellThread
 from deritradeterminal.threads.orders.MarketBuyThread import MarketBuyThread
 from deritradeterminal.threads.orders.MarketSellThread import MarketSellThread
 from deritradeterminal.threads.orders.ClosePositionThread import ClosePositionThread
@@ -55,10 +53,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
             # Add options to the acction selection
             self.limitOrderComboBox.addItem(x)
-            self.scalpOrderComboBox.addItem(x)
             self.marketOrderComboBox.addItem(x)
             self.stopOrderComboBox.addItem(x)
-            self.stopOrderComboBox.addItem(x)
+
 
         self.currentPositionsTable.setColumnCount(8)
 
@@ -102,9 +99,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.limitBuyButton.clicked.connect(self.do_limit_buy_button)
         self.limitSellButton.clicked.connect(self.do_limit_sell_button)
 
-        self.scalpBuyButton.clicked.connect(self.do_scalp_buy_button)
-        self.scalpSellButton.clicked.connect(self.do_scalp_sell_button)
-
         self.closeOrdersButton.clicked.connect(self.do_cancel_all_open_orders)
         self.closeStopOrdersButton.clicked.connect(self.do_cancel_all_stop_orders)
 
@@ -114,40 +108,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.marketAmountInput.setValidator(QDoubleValidator())
         self.limitPriceInput.setValidator(QDoubleValidator())
         self.limitAmountInput.setValidator(QDoubleValidator())
-        self.scalpSLInput.setValidator(QDoubleValidator())
-        self.scalpTPInput.setValidator(QDoubleValidator())
-        self.scalpAmountInput.setValidator(QDoubleValidator())
         self.stopOrderAmountInput.setValidator(QDoubleValidator())
         self.stopOrderPriceInput.setValidator(QDoubleValidator())
 
         self.webView = QtWebEngineWidgets.QWebEngineView(self)
         self.webView.setUrl(QtCore.QUrl("https://www.deribit.com/ftu_chart?instr=BTC-PERPETUAL"))
-        self.webView.setObjectName("webView")
-
-        self.horizontalLayout_4.addWidget(self.webView)
-        self.horizontalLayout_4.removeWidget(self.placeHolderFrame)
-        self.placeHolderFrame.deleteLater()
-
-        self.webView = QtWebEngineWidgets.QWebEngineView(self)
-        self.webView.setUrl(QtCore.QUrl("https://beastlybeast.github.io/SignificantTrades/index.html"))
-        self.webView.setObjectName("webView")
-        self.webView.setMaximumSize(354, 709,)
-
-        self.horizontalLayout_4.addWidget(self.webView)
-        self.horizontalLayout_4.removeWidget(self.placeHolderFrame)
-        self.placeHolderFrame.deleteLater()
-
-        self.webView = QtWebEngineWidgets.QWebEngineView(self)
-        self.webView.setUrl(QtCore.QUrl("https://www.bitmex.com/app/trade/XBTUSD"))
-        self.webView.setObjectName("webView")
-        self.webView.setMaximumSize(354, 709,)
-
-        self.horizontalLayout_4.addWidget(self.webView)
-        self.horizontalLayout_4.removeWidget(self.placeHolderFrame)
-        self.placeHolderFrame.deleteLater()
-
-        self.webView = QtWebEngineWidgets.QWebEngineView(self)
-        self.webView.setUrl(QtCore.QUrl("https://www.tradingview.com"))
         self.webView.setObjectName("webView")
 
         self.horizontalLayout_4.addWidget(self.webView)
@@ -590,65 +555,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             error_dialog = QErrorMessage()
             error_dialog.showMessage(str(e))
             print(e)
-
-    def do_scalp_buy_button(self):
-
-                try:
-
-                    config = ConfigManager.get_config()
-
-                    selection = str(self.scalpOrderComboBox.currentText())
-
-                    if selection == "All":
-
-                        for x in config.tradeApis:
-                            thread = ScalpBuyThread(x, float(self.scalpSLInput.text()),
-                                                    float(self.scalpAmountInput.text())), float(self.scalpTPInput.text())
-                            thread.signeler.connect(self.show_dialogs)
-                            thread.start()
-                            self.runningThreads.append(thread)
-
-                    else:
-                        thread = ScalpBuyThread(selection, float(self.scalpSLInput.text()),
-                                                float(self.scalpAmountInput.text())), float(self.scalpTPInput.text())
-                        thread.signeler.connect(self.show_dialogs)
-                        thread.start()
-                        self.runningThreads.append(thread)
-
-                except Exception as e:
-                    error_dialog = QErrorMessage()
-                    error_dialog.showMessage(str(e))
-                    print(e)
-
-    def do_scalp_sell_button(self):
-
-                try:
-
-                    config = ConfigManager.get_config()
-
-                    selection = str(self.scalpOrderComboBox.currentText())
-
-                    if selection == "All":
-
-                        for x in config.tradeApis:
-                            thread = ScalpSellThread(x, float(self.scalpSLInput.text()),
-                                                     float(self.scalpAmountInput.text()))
-                            thread.signeler.connect(self.show_dialogs)
-                            thread.start()
-                            self.runningThreads.append(thread)
-
-                    else:
-
-                        thread = ScalpSellThread(selection, float(self.ScalpSLInput.text()),
-                                                 float(self.ScalpAmountInput.text()))
-                        thread.signeler.connect(self.show_dialogs)
-                        thread.start()
-                        self.runningThreads.append(thread)
-
-                except Exception as e:
-                    error_dialog = QErrorMessage()
-                    error_dialog.showMessage(str(e))
-                    print(e)
 
     def do_close_position(self, accountid):
 
